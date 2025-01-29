@@ -1,39 +1,42 @@
-type CartItem2 = {
-  name: string;
-  price: number;
-};
-class ShoppingCart2 {
-  public items: CartItem[] = []; // Estado privado
+namespace WithTDA {
+  type CartItem = {
+    name: string;
+    price: number;
+  };
+  class ShoppingCart {
+    public items: CartItem[] = []; // Estado privado
 
-  public addItem(item: CartItem): void {
-    this.items.push(item);
-  }
-
-  public isReadyToPay(): boolean {
-    return this.items.length === 0;
-  }
-
-  public getItemsTotalPrice(): number {
-    return this.items.reduce((total, item) => total + item.price, 0);
-  }
-}
-
-class OrderProcessor2 {
-  public processOrder(cart: ShoppingCart2): void {
-    if (cart.isReadyToPay()) { //No se accede a su estado
-      throw new Error("¡Empty cart!");
+    public addItem(item: CartItem): void {
+      this.items.push(item);
     }
 
-    // Lógica de la clase 👍
-    this.generateInvoice(cart.getItemsTotalPrice());
-    this.sendConfirmation();
+    public isReadyToPay(): boolean {
+      return this.items.length === 0;
+    }
+
+    public getItemsTotalPrice(): number {
+      return this.items.reduce((total, item) => total + item.price, 0);
+    }
   }
 
-  private generateInvoice(amount: number): void {
-    console.log("invoice generated for amount", amount);
-  }
+  class OrderProcessor {
+    public processOrder(cart: ShoppingCart): void {
+      if (cart.isReadyToPay()) {
+        //No se accede a su estado
+        throw new Error("¡Empty cart!");
+      }
 
-  private sendConfirmation(): void {
-    console.log("Confirmation has been sent");
+      // Lógica de la clase 👍
+      this.generateInvoice(cart.getItemsTotalPrice());
+      this.sendConfirmation();
+    }
+
+    private generateInvoice(amount: number): void {
+      console.log("invoice generated for amount", amount);
+    }
+
+    private sendConfirmation(): void {
+      console.log("Confirmation has been sent");
+    }
   }
 }
